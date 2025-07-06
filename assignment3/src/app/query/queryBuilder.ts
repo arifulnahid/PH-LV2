@@ -26,9 +26,9 @@ export class QueryBuilder<T extends Document> {
   }
 
   sort(): this {
-    const sortBy: string | undefined = this.queryString.sortBy;
+    const sortBy: string | "createdAt" = this.queryString.sortBy ?? "createdAt";
     if (sortBy) {
-      let sort: string = this.queryString.sort ?? "asc";
+      let sort: string = this.queryString.sort ?? "desc";
 
       this.query = this.query.sort({ [sortBy]: sort } as any);
     }

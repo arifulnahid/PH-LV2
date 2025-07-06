@@ -1,7 +1,7 @@
 import express, { Request, Response } from "express";
-import { Book } from "../models/book.model";
+import { Book, type bookSchemaType } from "../models/book.model";
 import { QueryBuilder } from "../query/queryBuilder";
-import { IBook } from "../inerfaces/book.interface";
+import { type IBook, type IBookWithBorrow } from "../inerfaces/book.interface";
 
 export const bookRoutes = express.Router();
 
@@ -47,8 +47,8 @@ bookRoutes.get("/:bookId", async (req: Request, res: Response) => {
     if (q.borrow) book = await Book.withBorrow();
     else book = await Book.find({ _id: req.params.bookId });
 
-    res.status(400).json({
-      success: false,
+    res.status(200).json({
+      success: true,
       message: "Book retrived successful",
       data: book,
     });
@@ -63,11 +63,15 @@ bookRoutes.get("/:bookId", async (req: Request, res: Response) => {
 
 bookRoutes.put("/:bookId", async (req: Request, res: Response) => {
   try {
-    const book = await Book.findByIdAndUpdate(req.params.bookId, req.body, {
-      new: true,
-    });
+    const book = await Book.findByIdAndUpdate(
+      req.params.bookId,
+      { ...req.body, available: req.body.copies && req.body.available },
+      {
+        new: true,
+      }
+    );
     res.status(200).json({
-      success: false,
+      success: true,
       message: "Book Update successful",
       data: book,
     });
@@ -83,9 +87,8 @@ bookRoutes.put("/:bookId", async (req: Request, res: Response) => {
 bookRoutes.delete("/:bookId", async (req: Request, res: Response) => {
   try {
     const book = await Book.findByIdAndDelete(req.params.bookId);
-    console.log(book);
     res.status(200).json({
-      success: false,
+      success: true,
       message: "Book delete successful",
       data: null,
     });

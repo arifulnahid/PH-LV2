@@ -1,6 +1,6 @@
-import { model, Schema } from "mongoose";
-import { IBook } from "../inerfaces/book.interface";
-import { IBorrow } from "../inerfaces/borrow.interface";
+import { InferRawDocType, model, Schema } from "mongoose";
+import { type IBook, type IBookWithBorrow } from "../inerfaces/book.interface";
+import { type IBorrow } from "../inerfaces/borrow.interface";
 
 const bookSchema = new Schema<IBook>(
   {
@@ -38,3 +38,4 @@ bookSchema.statics.withBorrow = async function () {
 };
 
 export const Book = model<IBook>("Book", bookSchema);
+export type bookSchemaType = InferRawDocType<typeof bookSchema>;

@@ -1,0 +1,12 @@
+POST http://localhost:5000/api/borrow
+content-type: application/json
+
+{
+  "book": "6856de7445bec6b5bcbcf4aa",
+  "quantity": 3,
+  "dueDate": "2025-07-18T00:00:00.000Z"
+}
+
+###
+
+GET http://localhost:5000/api/borrow

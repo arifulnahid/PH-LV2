@@ -22,18 +22,25 @@ borrowRoutes.get("/", async (req: Request, res: Response) => {
           _id: "$book._id",
           totalQuantity: { $sum: "$quantity" },
           book: { $first: "$book" },
+          dueDate: { $first: "$dueDate" },
         },
       },
       {
         $project: {
           totalQuantity: "$totalQuantity",
-          book: { title: "$book.title", isbn: "$book.isbn" },
+          book: {
+            title: "$book.title",
+            isbn: "$book.isbn",
+          },
+          dueDate: "$dueDate",
         },
       },
     ]);
-    res
-      .status(200)
-      .json({ success: true, message: "Borrow retrive successfully", borrow });
+    res.status(200).json({
+      success: true,
+      message: "Borrow retrive successfully",
+      data: borrow,
+    });
   } catch (error) {
     res
       .status(400)

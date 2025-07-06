@@ -1,0 +1,34 @@
+POST http://localhost:5000/api/books
+content-type: application/json
+
+{
+    "title": "The Theory of Everything",
+    "author": "Stephen Hawking",
+    "genre": "SCIENCE",
+    "isbn": "9780553380163",
+    "description": "An overview of cosmology and black holes.",
+    "copies": 5,
+    "available": true
+}
+
+###
+
+PUT http://localhost:5000/api/books/68555d4dee06466ac28110d6
+content-type: application/json
+
+{
+    "isbn": "9780553380163A",
+    "description": "An overview of cosmology and black holes.",
+    "copies": 500,
+    "available": false
+}
+
+###
+
+GET http://localhost:5000/api/books?filter=SCIENCE&sortBy=createdAt&sort=desc&limit=5
+
+###
+GET http://localhost:5000/api/books/6855637b1b0152dd439e47e6
+
+###
+DELETE http://localhost:5000/api/books/6855637b1b0152dd439e47e6
